@@ -1,4 +1,4 @@
-let productos = [];
+import { productos } from "./datos.js";
 
 function agregar() {
     let nombre = prompt("Nombre del producto:");
@@ -12,8 +12,7 @@ function agregar() {
     );
 }
 
-function listar() 
-{
+export function listar() {
     let texto = "";
 
     productos.forEach((producto, indice) => {
@@ -39,22 +38,24 @@ function eliminar() {
 
     productos.splice(indice, 1);
 }
+function mostrarMenu() {
+    let opcion;
 
-let opcion;
+    do {
+            opcion = prompt(
+                "COCINA\n" +
+                "1. Agregar\n" +
+                "2. Editar\n" +
+                "3. Eliminar\n" +
+                "4. Listar\n" +
+                "5. Salir"
+            );
 
-do {
-        opcion = prompt(
-            "COCINA\n" +
-            "1. Agregar\n" +
-            "2. Editar\n" +
-            "3. Eliminar\n" +
-            "4. Listar\n" +
-            "5. Salir"
-        );
+        if (opcion == "1") agregar();
+        if (opcion == "2") editar();
+        if (opcion == "3") eliminar();
+        if (opcion == "4") listar();
 
-    if (opcion == "1") agregar();
-    if (opcion == "2") editar();
-    if (opcion == "3") eliminar();
-    if (opcion == "4") listar();
+    } while (opcion != "5");
+}
 
-} while (opcion != "5");
