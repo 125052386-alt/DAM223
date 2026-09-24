@@ -1,6 +1,6 @@
-import { listaPedidos } from "./datos.js";
+import { listaPedidos, bebidas, postres, promociones } from "./datos.js";
 
-
+let productos = [...bebidas, ...postres];
 function mostrarMenu() {
   console.log(`
 =============================
@@ -16,21 +16,16 @@ function mostrarMenu() {
 
 
 function consultarProductos() {
-
-  console.log(" Lista de productos disponibles:");
-
-  productos.forEach((producto, indice) => {
-
-    console.log(
-      `${indice + 1}. ${producto.nombre} - $${producto.precio}`
-    );
-
+  const lista = productos.map((producto, indice) => {
+    return `${indice + 1}. ${producto.nombre} - $${producto.precio}`;
   });
 
+  console.log("Lista de productos disponibles:\n" + lista.join("\n"));
 }
 
 
 function crearPedido(producto) {
+  
 
   let indice = prompt(
     "Ingrese el número del producto:"
@@ -45,11 +40,8 @@ function crearPedido(producto) {
     listaPedidos.push({
 
       nombreCliente: nombreCliente,
-
       nombreProducto: productos[indice].nombre,
-
       precioProducto: productos[indice].precio
-
     });
 
     console.log(
@@ -57,7 +49,6 @@ function crearPedido(producto) {
     );
 
   } else {
-
     console.log("Producto no encontrado.");
 
   }
@@ -67,20 +58,29 @@ function crearPedido(producto) {
 export function mostrarPedidosCliente(cliente){
 
   let pedidos = listaPedidos.filter(
-    (pedido) =>
-      pedido.nombreCliente.toLowerCase() === cliente.toLowerCase()
+    (pedido) => pedido.nombreCliente.toLowerCase() === cliente.toLowerCase()
   );
 
-  let texto = `Pedidos de ${cliente}:\n\n`;
+  let total = pedidos.reduce((acumulado, pedido) => acumulado + Number(pedido.precioProducto || 0), 0);
+
+  let texto = `Estos son los Pedidos de ${cliente}:\n\n`;
 
   pedidos.forEach((pedido, indice) => {
     texto += `${indice + 1}. ${pedido.nombreProducto} - $${pedido.precioProducto}\n`;
   });
 
+  texto += `\nTotal de pedidos: $${total.toFixed(2)}`;
+
   alert(texto || "No hay pedidos para ese cliente");
 
 }
+export function mostrarPromocionesCliente() {
+  const promocionesTexto = promociones.map((promo, indice) => {
+    return `${indice + 1}. ${promo}`;
+  });
 
+  alert("Promociones disponibles:\n\n" + (promocionesTexto.join("\n") || "No hay promociones disponibles en este momento."));
+}
 
 
 function main() {
@@ -89,3 +89,5 @@ function main() {
   crearPedido();
   mostrarPedidosCliente();
 }
+
+
