@@ -81,7 +81,24 @@ export function mostrarPromocionesCliente() {
 
   alert("Promociones disponibles:\n\n" + (promocionesTexto.join("\n") || "No hay promociones disponibles en este momento."));
 }
+export function mostrarEstadosPedido(pedido) {
+  return new Promise(resolve => {
+    alert(`Pedido recibido: ${pedido.nombreProducto}`);
 
+    setTimeout(() => {
+      alert("Preparando...");
+
+      setTimeout(() => {
+        alert("Empacando...");
+
+        setTimeout(() => {
+          alert("Pedido entregado");
+          resolve();
+        }, 2000);
+      }, 2000);
+    }, 2000);
+  });
+}
 
 function main() {
   mostrarMenu();
@@ -89,5 +106,6 @@ function main() {
   crearPedido();
   mostrarPedidosCliente();
 }
+
 
 
