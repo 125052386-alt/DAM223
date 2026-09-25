@@ -1,11 +1,11 @@
 import { agregar, listar,filtrar, buscar } from "./cocina.js";
 import { nuevoPedido,listarPedidos} from "./cajero.js";
-import { mostrarPedidosCliente } from "./cliente.js";
+import { mostrarPedidosCliente,mostrarEstadosPedido } from "./cliente.js";
 
-let op;
+let opcion;
 do
 {
-    let opcion=prompt("Que deseas hacer? \n1.-Listar Productos \n2.-Filtrar productos"
+    opcion=prompt("Que deseas hacer? \n1.-Listar Productos \n2.-Filtrar productos"
         +" \n3.-Hacer un nuevo pedido \n4.-Agregar productos \nElige una opción");
 
     switch(opcion) {
@@ -21,7 +21,6 @@ do
             } else {
                 alert("Opción no válida. Por favor, elige 'f' para filtrar o 'b' para buscar.");
             }
-
             break;
         case "3": 
             let seguirCliente = "s";
@@ -31,15 +30,34 @@ do
                 let seguirPedido = "s";
 
                 while (seguirPedido.toLowerCase() === "s") {
-                    nuevoPedido(
+                    let pedidoAceptado = false;
+                    let motivoRechazo = "";
+                    let pedidoRealizado;
+
+                    await nuevoPedido(
                         cliente,
-                        () => alert("Estado: ¡Pedido listo para entrega!"),
-                        () => alert("Estado: Pedido cancelado.")
+                        pedido => {
+                            pedidoAceptado = true;
+                            pedidoRealizado = pedido;
+                        },
+                        motivo => {
+                            pedidoAceptado = false;
+                            motivoRechazo = motivo;
+                        }
                     );
+
+                    alert(
+                        pedidoAceptado
+                            ? "Pedido aceptado"
+                            : `Pedido rechazado: ${motivoRechazo}`
+                    );
+
+                    if (pedidoAceptado) {
+                        await mostrarEstadosPedido(pedidoRealizado);
+                    }
                     
                     seguirPedido = prompt("¿Deseas agregar otro pedido para este cliente? (s/n)");
                 }
-
                 mostrarPedidosCliente(cliente);
                 listarPedidos(cliente);
                
@@ -57,5 +75,5 @@ do
         default:
             alert("Opción no disponible");
     }       
-    op=prompt("Deseas elegir otra opcion? s/n")
-}while(op.toLowerCase() === "s");
+    opcion=prompt("Deseas elegir otra opcion? s/n")
+}while(opcion.toLowerCase() === "s");
