@@ -85,12 +85,13 @@ function eliminar() {
 }
 export function filtrar()
 {
-    let texto = "";
+    let textob = "";
+    let textop="";
     const producto=[...bebidas,...postres];
 
     do
     {
-        let op=prompt("1.-Baratos \n 2.-Caros \n 3.-Bebidad \n"
+        let op=prompt("1.-Baratos \n 2.-Caros \n 3.-Bebidas \n"
             +" 4.-Postres \n Elige una opción")
         switch(op)
         {
@@ -118,27 +119,26 @@ export function filtrar()
                 alert("Bebidas:");
 
                 bebidas.forEach((bebidas, indice) => {
-                    texto += `${indice + 1}. ${bebidas.nombre} - $${bebidas.precio}\n`;
+                    textob += `${indice + 1}. ${bebidas.nombre} - $${bebidas.precio}\n`;
                 });
 
-                alert(texto || "No hay bebidas");
+                alert(textob || "No hay bebidas");
                 break
             case "4": 
-                texto = "";
 
                 alert("Postres:");
 
                 postres.forEach((postres, indice) => {
-                texto += `${indice + 1}. ${postres.nombre} - $${postres.precio}\n`;
+                textop += `${indice + 1}. ${postres.nombre} - $${postres.precio}\n`;
                 });
 
-                alert(texto || "No hay postres");
+                alert(textop || "No hay postres");
                 break
             default:
                 alert("Opcion no disponible");
         }
 
-    }while(op<0 && op>4);
+    }while (op !== "5");
 
 
     
@@ -169,6 +169,29 @@ export function agregarPromocion() {
         alert("No se pudo agregar una promoción vacía.");
     }
 }
+export function prepararCafe() {
+    return new Promise((resolve, reject) => {
+        const ingrediente = prompt("¿Hay ingredientes? s/n");
+
+        if (ingrediente.toLowerCase() !== "s") {
+            let ingrediente=prompt("Que ingrediente no hay");
+            reject("Faltan ingredientes \n Ingrediente Faltante: \n"+ingrediente)
+            return;
+        }
+
+
+        const cocina = prompt("¿La cocina funciona? s/n");
+
+        if (cocina.toLowerCase() !== "s") {
+            let cocina=prompt("Que no funciona de la cocina");
+            reject("La cocina no funciona, se descompuso: "+cocina);
+            return;
+        }
+
+        resolve("Pedido realizado correctamente");
+    });
+}
+
 
 function mostrarMenu() {
     let opcion;
@@ -183,7 +206,7 @@ function mostrarMenu() {
                 "5. Salir"
             );
 
-        if (opcion == "1") agregar();
+        if (opcion == "1") agregar() ;
         if (opcion == "2") editar();
         if (opcion == "3") eliminar();
         if (opcion == "4") listar();

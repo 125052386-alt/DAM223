@@ -31,7 +31,12 @@ do
                 let seguirPedido = "s";
 
                 while (seguirPedido.toLowerCase() === "s") {
-                    nuevoPedido(cliente);
+                    nuevoPedido(
+                        cliente,
+                        () => alert("Estado: ¡Pedido listo para entrega!"),
+                        () => alert("Estado: Pedido cancelado.")
+                    );
+                    
                     seguirPedido = prompt("¿Deseas agregar otro pedido para este cliente? (s/n)");
                 }
 

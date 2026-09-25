@@ -1,4 +1,5 @@
 import { listaPedidos } from "./datos.js";
+import { prepararCafe } from "./cocina.js";
 
 let totalAcumulado = 0;
 
@@ -18,26 +19,46 @@ function agregarPedido(cliente, producto, precio) {
     };
 
     listaPedidos.push(pedido);
-    totalAcumulado = totalAcumulado + precioConIva;
+    totalAcumulado += precioConIva;
 
     console.log("¡Pedido agregado con éxito!");
 }
 
-export function nuevoPedido(cliente) {
+export function nuevoPedido(cliente, callbackListo, callbackCancelado) {
     let producto = prompt("Nombre del producto:");
     let precio = parseFloat(prompt("Precio del producto:"));
 
-    agregarPedido(cliente, producto, precio);
+    if (!producto || isNaN(precio)) {
+        callbackCancelado(); 
+        return;
+    }
 
-    alert("Pedido guardado");
+    prepararCafe()
+        .then(() => {
+            agregarPedido(cliente, producto, precio);
+            alert("Pedido guardado");
+            callbackListo();
+        })
+        .catch(error => {
+            alert(error);
+            alert("Pedido cancelado");
+            callbackCancelado();
+        });
 }
+
+const mostrarPedidoListo = () => {
+    alert("Estado: ¡Pedido listo para entrega!");
+};
+
+const mostrarPedidoCancelado = () => {
+    alert("Estado: Pedido cancelado.");
+};
 
 export function listarPedidos(cliente) {
     let totalGeneral = 0;
     let mensaje = "Lista de Pedidos - Caja\n\n";
 
-    for (let i = 0; i < listaPedidos.length; i++) {
-        const { nombreCliente, nombreProducto, precioProducto, subtotalPedido, ivaPedido } = listaPedidos[i];
+    for (let i = 0; i < listaPedidos.length; i++) {const { nombreCliente, nombreProducto, precioProducto, subtotalPedido, ivaPedido } = listaPedidos[i];
         totalGeneral += precioProducto;
 
         mensaje += "Ticket \n Cliente: " + nombreCliente + "\n" +
@@ -48,11 +69,9 @@ export function listarPedidos(cliente) {
             "--------------------------------------\n\n";
     }
 
-    mensaje += "TOTAL DE TODOS LOS PRODUCTOS: $" + totalGeneral.toFixed(2);
-
-    alert(mensaje);
 
     console.log("--- LISTA DE PEDIDOS ---");
     console.log(listaPedidos);
-    console.log("Total acumulado en caja: $" + totalGeneral.toFixed(2));
+
+    console.log(`Total acumulado en caja: $${totalAcumulado.toFixed(2)}`);
 }
