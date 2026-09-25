@@ -2,14 +2,16 @@ import { bebidas, postres, promociones } from "./datos.js";
 
 export function agregar() {
     let nombre = prompt("Nombre del producto:");
-    let precio = prompt("Precio del producto:");
+    let precio = parseFloat(prompt("Precio del producto:"));
     let tipo = prompt("Tipo de producto (bebida/postre):");
+    let stock = parseInt(prompt("Cantidad disponible:"));
 
     if (tipo.toLowerCase() === "bebida") {
          bebidas.push(
         {
             nombre: nombre,
-            precio: precio
+            precio: precio,
+            stock: stock
         }
         );
     }
@@ -18,7 +20,8 @@ export function agregar() {
         postres.push(
             {
                 nombre: nombre,
-                precio: precio
+                precio: precio,
+                stock: stock
             }
         );
     } 
@@ -31,7 +34,7 @@ export function listar() {
     alert("Bebidas:");
 
     bebidas.forEach((bebidas, indice) => {
-        texto += `${indice + 1}. ${bebidas.nombre} - $${bebidas.precio}\n`;
+        texto += `${indice + 1}. ${bebidas.nombre} - $${bebidas.precio}-Disponibles: ${bebidas.stock}\n`;
     });
 
     alert(texto || "No hay bebidas");
@@ -40,7 +43,7 @@ export function listar() {
     alert("Postres:");
 
     postres.forEach((postres, indice) => {
-        texto += `${indice + 1}. ${postres.nombre} - $${postres.precio}\n`;
+        texto += `${indice + 1}. ${postres.nombre} - $${postres.precio} - Disponibles: ${postres.stock}\n`;
     });
 
     alert(texto || "No hay postres");
@@ -53,13 +56,15 @@ function editar() {
         let indice = prompt("Número del producto a editar:") - 1;
 
         bebidas[indice].nombre = prompt("Nuevo nombre:");
-        bebidas[indice].precio = prompt("Nuevo precio:");
+        bebidas[indice].precio = parseFloat(prompt("Nuevo precio:"));
+        bebidas[indice].stock = parseFloat(prompt("Cantidad disponible:"));
     }
     else if (tipo.toLowerCase()==="postre");
     {
         let indice = prompt("Número del producto a editar:") - 1;
         postres[indice].nombre = prompt("Nuevo nombre:");
-        postres[indice].precio = prompt("Nuevo precio:");
+        postres[indice].precio = parseFloat(prompt("Nuevo precio:"));
+        postres[indice].stock=parseFloat(prompt("Cantidad sisponible:"));
 
     }
 
@@ -88,19 +93,17 @@ export function filtrar()
     let textob = "";
     let textop="";
     const producto=[...bebidas,...postres];
+    let op=prompt("1.-Baratos \n 2.-Caros \n 3.-Bebidas \n"
+        +" 4.-Postres \n Elige una opción");
 
-    do
+    switch(op)
     {
-        let op=prompt("1.-Baratos \n 2.-Caros \n 3.-Bebidas \n"
-            +" 4.-Postres \n Elige una opción")
-        switch(op)
-        {
             case "1":
                 let baratos=producto.filter(producto => producto.precio < 30);
                 let texto = "Productos baratos:\n";
 
                 baratos.forEach((producto, indice) => {
-                    texto += `${indice + 1}. ${producto.nombre} - $${producto.precio}\n`;
+                    texto += `${indice + 1}. ${producto.nombre} - $${producto.precio} - Disponibles: ${producto.stock}\n`;
                 });
 
                  alert(texto || "No hay productos baratos"); 
@@ -110,7 +113,7 @@ export function filtrar()
                 let textoc="Productos caros:\n";
 
                 caros.forEach((producto, indice) => {
-                 textoc += `${indice + 1}. ${producto.nombre} - $${producto.precio}\n`;
+                 textoc += `${indice + 1}. ${producto.nombre} - $${producto.precio} - Disponibles: ${producto.stock}\n`;
                 });
 
                  alert(textoc || "No hay productos caros");
@@ -119,7 +122,7 @@ export function filtrar()
                 alert("Bebidas:");
 
                 bebidas.forEach((bebidas, indice) => {
-                    textob += `${indice + 1}. ${bebidas.nombre} - $${bebidas.precio}\n`;
+                    textob += `${indice + 1}. ${bebidas.nombre} - $${bebidas.precio} - Disponibles: ${bebidas.stock}\n`;
                 });
 
                 alert(textob || "No hay bebidas");
@@ -129,16 +132,14 @@ export function filtrar()
                 alert("Postres:");
 
                 postres.forEach((postres, indice) => {
-                textop += `${indice + 1}. ${postres.nombre} - $${postres.precio}\n`;
+                textop += `${indice + 1}. ${postres.nombre} - $${postres.precio} - Disponibles: ${postres.stock}\n`;
                 });
 
                 alert(textop || "No hay postres");
                 break
             default:
                 alert("Opcion no disponible");
-        }
-
-    }while (op !== "5");
+    }
 
 
     
@@ -171,20 +172,15 @@ export function agregarPromocion() {
 }
 export function prepararCafe() {
     return new Promise((resolve, reject) => {
-        const ingrediente = prompt("¿Hay ingredientes? s/n");
+        const resultado = Math.random();
 
-        if (ingrediente.toLowerCase() !== "s") {
-            let ingrediente=prompt("Que ingrediente no hay");
-            reject("Faltan ingredientes \n Ingrediente Faltante: \n"+ingrediente)
+        if (resultado <= 0.1) {
+            reject("Falta un ingrediente");
             return;
         }
 
-
-        const cocina = prompt("¿La cocina funciona? s/n");
-
-        if (cocina.toLowerCase() !== "s") {
-            let cocina=prompt("Que no funciona de la cocina");
-            reject("La cocina no funciona, se descompuso: "+cocina);
+        if (resultado >=0.9) {
+            reject("Error en la cocina");
             return;
         }
 
