@@ -1,4 +1,4 @@
-import { listaPedidos } from "./datos.js";
+import { listaPedidos, bebidas, postres } from "./datos.js";
 import { prepararCafe } from "./cocina.js";
 
 let totalAcumulado = 0;
@@ -22,27 +22,44 @@ function agregarPedido(cliente, producto, precio) {
     totalAcumulado += precioConIva;
 
     console.log("¡Pedido agregado con éxito!");
+    return pedido;
 }
 
 export function nuevoPedido(cliente, callbackListo, callbackCancelado) {
-    let producto = prompt("Nombre del producto:");
-    let precio = parseFloat(prompt("Precio del producto:"));
+    let nombreProducto = prompt("Nombre del producto:");
 
-    if (!producto || isNaN(precio)) {
-        callbackCancelado(); 
-        return;
+    if (!nombreProducto) {
+        callbackCancelado("No se indicó ningún producto");
+        return Promise.resolve();
     }
 
-    prepararCafe()
+    let productos = [...bebidas, ...postres];
+    let productoEncontrado = productos.find(producto =>
+        producto.nombre.toLowerCase() === nombreProducto.trim().toLowerCase()
+    );
+
+    if (!productoEncontrado) {
+        callbackCancelado("Producto no encontrado");
+        return Promise.resolve();
+    }
+
+    if (productoEncontrado.stock <= 0) {
+        callbackCancelado("Producto agotado");
+        return Promise.resolve();
+    }
+
+    return prepararCafe()
         .then(() => {
-            agregarPedido(cliente, producto, precio);
-            alert("Pedido guardado");
-            callbackListo();
+            productoEncontrado.stock--;
+            const pedido = agregarPedido(
+                cliente,
+                productoEncontrado.nombre,
+                productoEncontrado.precio,
+            );
+            callbackListo(pedido);
         })
         .catch(error => {
-            alert(error);
-            alert("Pedido cancelado");
-            callbackCancelado();
+            callbackCancelado(error);
         });
 }
 
@@ -73,5 +90,6 @@ export function listarPedidos(cliente) {
     console.log("--- LISTA DE PEDIDOS ---");
     console.log(listaPedidos);
 
+    alert(mensaje);
     console.log(`Total acumulado en caja: $${totalAcumulado.toFixed(2)}`);
 }
