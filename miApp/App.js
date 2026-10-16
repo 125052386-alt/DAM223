@@ -14,7 +14,13 @@ export default function App() {
       <Saludo></Saludo>
       <StatusBar style="auto" />
       <Saludo2></Saludo2>
-      <Perfil></Perfil>
+      <Perfil 
+      nombre="Karen Hernandez"
+      carrera="ITTID" 
+      materia="Desarrollo De Aplicaciones Moviles"
+      cuatrimestre="4to Cuatrimestre"
+      >
+      </Perfil>
     </View>
   );
 }
