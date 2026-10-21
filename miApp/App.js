@@ -9,16 +9,29 @@ import {Perfil} from './components/Perfil';
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Hola Mundo React Native</Text>
-      <Image source={require('./assets/wave.png')}/> 
-      <Saludo></Saludo>
-      <StatusBar style="auto" />
-      <Saludo2></Saludo2>
+
       <Perfil 
       nombre="Karen Hernandez"
       carrera="ITTID" 
       materia="Desarrollo De Aplicaciones Moviles"
       cuatrimestre="4to Cuatrimestre"
+      style={styles.tarjeta1}
+      >
+      </Perfil>
+      <Perfil 
+      nombre="Agustin Rivera"
+      carrera="ISC" 
+      materia="Desarrollo De Aplicaciones Moviles"
+      cuatrimestre="4to Cuatrimestre"
+      style={styles.tarjeta2}
+      >
+      </Perfil>
+      <Perfil 
+      nombre="Kevin Piña"
+      carrera="ITC" 
+      materia="Desarrollo De Aplicaciones Moviles"
+      cuatrimestre="4to Cuatrimestre"
+      style={styles.tarjeta3}
       >
       </Perfil>
     </View>
@@ -31,7 +44,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    flexDirection:'column',
     alignItems: 'center',
     justifyContent: 'center',
   },
+  tarjeta1:{backgroundColor:'#bbaff3'},
+  tarjeta2:{backgroundColor:'#FFD3B6'},
+  tarjeta3:{backgroundColor:'#87dbef'},
+
 });
