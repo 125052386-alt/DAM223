@@ -2,7 +2,7 @@
 import { StyleSheet, View, Text} from 'react-native';
 
 /* 2.-Zona de la ejecución/main(Componenntes o Screens) */
-export default function PressableScreen() {
+export default function ActivityScrenn() {
   return (
     <View style={styles.container}>
 
