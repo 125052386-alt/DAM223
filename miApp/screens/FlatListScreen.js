@@ -1,27 +1,48 @@
-/* 1.- Zona de importaciones */
-import { StyleSheet, View, Text} from 'react-native';
+import React, { useState } from "react";
+import { View, Button, StyleSheet } from "react-native";
+import PantallaTareas from "../components/PantallaTareas";
+import PantallaContactos from "../components/PantallaContactos";
 
-/* 2.-Zona de la ejecución/main(Componenntes o Screens) */
 export default function FlatListScreen() {
-  return (
-    <View style={styles.container}>
+  const [pantalla, setPantalla] = useState("tareas");
 
-        <Text>Aqui Va la practica 13</Text>
-        <Text>Equipo: Natalia</Text>
-      
+  return (
+    <View style={styles.contenedor}>
+      <View style={styles.fila}>
+        <Button title="FlatList" onPress={() => setPantalla("tareas")} />
+        <Button title="SectionList" onPress={() => setPantalla("contactos")} />
+      </View>
+      {pantalla === "tareas" ? <PantallaTareas /> : <PantallaContactos />}
     </View>
   );
 }
 
-
-/* 3.-Zona de estilos */
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    flexDirection:'column',
-    alignItems: 'center',
-    justifyContent:'center',
+  contenedor: { flex: 1, paddingTop: 50, paddingHorizontal: 16 },
+  pantalla: { flex: 1 },
+  fila: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginVertical: 8,
   },
-
+  input: {
+    borderWidth: 1,
+    borderColor: "#cccccc",
+    borderRadius: 6,
+    padding: 8,
+    marginTop: 8,
+  },
+  titulo: { fontSize: 22, fontWeight: "bold", paddingVertical: 12 },
+  encabezado: {
+    backgroundColor: "#eeeeee",
+    padding: 8,
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  item: { padding: 14 },
+  seleccionado: { backgroundColor: "#d0e8ff" },
+  separador: { height: 1, backgroundColor: "#cccccc" },
+  pie: { padding: 8, color: "#666666" },
+  vacio: { padding: 16, textAlign: "center" },
 });
+
