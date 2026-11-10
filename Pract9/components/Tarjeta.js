@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {Text, View, Pressable, Alert, Platform} from 'react-native';
+import {Text, View, Pressable, Alert, Platform, StyleSheet } from 'react-native';
 
 const mostrarAlerta=(titulo, mensaje)=>{
   if(Platform.OS==='web'){
@@ -10,14 +10,14 @@ const mostrarAlerta=(titulo, mensaje)=>{
   }
 }
 
-export const Tarjeta =({nombre, carrera})=>{
+export const Tarjeta =({nombre, carrera, style})=>{
     const ver = () => {
         mostrarAlerta('datos',`Nombre:${nombre} \n carrera:${carrera} `);
 
     };
 
     return (
-        <View>
+        <View style={[estilos.tarjeta,style]}>
 
             <Pressable
             onPress={ver}>
@@ -29,3 +29,12 @@ export const Tarjeta =({nombre, carrera})=>{
     );
 
 };
+
+const estilos = StyleSheet.create({
+    tarjeta:{
+        margin:10,
+        Padding: 20,
+        marginBottom: 20,
+
+    },
+});

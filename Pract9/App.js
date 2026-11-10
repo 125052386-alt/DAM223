@@ -4,10 +4,17 @@ import {Tarjeta} from './components/Tarjeta'
 
 export default function App() {
   return(
-    <View>
+    <View style={styles.container}>
       <Tarjeta
       nombre="Karen"
       carrera="TIID"
+      style={styles.tarjeta1}
+      >
+      </Tarjeta>
+      <Tarjeta
+      nombre="Karen"
+      carrera="TIID"
+      style={styles.tarjeta2}
       >
       </Tarjeta>
     </View>
@@ -17,9 +24,14 @@ export default function App() {
 };
 
 const styles = StyleSheet.create({
+  tarjeta2:{
+    backgroundColor: '#9b4949',
+  },
+
   container: {
     flex: 1, 
-    justifyContent: 'center', 
+    flexDirection:'column',
+    justifyContent: 'flex-start', 
     alignItems: 'center', 
     backgroundColor: '#fff',
   },
