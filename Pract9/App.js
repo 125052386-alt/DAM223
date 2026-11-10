@@ -1,38 +1,19 @@
 import { useState } from 'react';
 import { StyleSheet, Text, View, Switch, Pressable } from 'react-native';
+import {Tarjeta} from './components/Tarjeta'
 
 export default function App() {
-
-  //Constante para el estado del switch
-  const [encendido, setEncendido] = useState(false);
-
-  //Constante para el estado del pressable
-  const [contador, setContador] = useState(0);
-
-  return (
-    <View style={styles.container}>
-      <Text style={styles.titulo}>Práctica: Switch y Pressable</Text>
-
-      <Switch
-        value={encendido}
-        onValueChange={(valor) => setEncendido(valor)}
-      />
-      <Text style={styles.texto}>
-        El Switch está: {encendido ? 'Encendido' : 'Apagado'}
-      </Text>
-
-      <Pressable 
-        style={styles.boton} 
-        onPress={() => setContador(contador + 1)}
+  return(
+    <View>
+      <Tarjeta
+      nombre="Karen"
+      carrera="TIID"
       >
-        <Text style={styles.textoBoton}>Presióname</Text>
-      </Pressable>
-      <Text style={styles.texto}>
-        Veces presionado: {contador}
-      </Text>
-
+      </Tarjeta>
     </View>
   );
+
+
 };
 
 const styles = StyleSheet.create({
