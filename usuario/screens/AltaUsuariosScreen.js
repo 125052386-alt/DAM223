@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import {View,SafeAreaView,Text,TextInput,Pressable,StyleSheet,} from 'react-native';
+import {View,Text,TextInput,Pressable,StyleSheet,} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function App() {
   const [nombre, setNombre] = useState('');

@@ -1,6 +1,7 @@
 import React from 'react';
-import {SafeAreaView,View,Text,FlatList,StyleSheet,
+import {View,Text,FlatList,StyleSheet,
 } from 'react-native';
+import { SafeAreaView} from 'react-native-safe-area-context';
 
 export default function ConsultaUsuariosScreen() {
 
